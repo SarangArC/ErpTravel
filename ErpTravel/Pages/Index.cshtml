@@ -6,7 +6,7 @@
 
 <h1>Travel Booking to Singapore</h1>
 
-<form method="post">
+<form id="travelform" action="invoice.cshtml" method="get">
     <label for="days">Number of Days</label>
     <select id="days" name="days" required>
         <option value="2">2 Days 1 Night</option>
@@ -32,10 +32,11 @@
         <!-- Vehicle options will be dynamically updated based on the number of people -->
     </select>
 
-    <input type="submit" value="Submit" />
+   <!-- <input type="submit" value="Submit" /> -->
 </form>
 
 <div id="itinerary">
     <!-- Itinerary details will be shown here based on user selections -->
 </div>
+ <form id="travelform" action="invoice.cshtml" method="get"><input type="submit" value="Submit" /></form> 
 <script src="~/script.js"></script>

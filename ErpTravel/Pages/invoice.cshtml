@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .total {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <h2>Invoice</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody id="invoiceDetails">
+                <!-- Invoice details will be injected here -->
+            </tbody>
+        </table>
+
+        <h3>Pricing Breakdown</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Price per Person</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody id="pricingDetails">
+                <!-- Pricing details will be injected here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+     
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get URL parameters
+            const params = new URLSearchParams(window.location.search);
+
+            // Fetch form data from URL parameters
+            const adults = parseInt(params.get('adults')) || 0;
+            const childrenWithBed = parseInt(params.get('childrenWithBed')) || 0;
+            const childrenWithoutBed = parseInt(params.get('childrenWithoutBed')) || 0;
+            const roomType = params.get('roomType');
+            const vehicle = params.get('vehicle');
+            const days = params.get('days');
+
+            // Define prices
+            const pricePerAdult = 100;
+            const pricePerChildWithBed = 80;
+            const pricePerChildWithoutBed = 50;
+
+            // Calculate totals
+            const totalAdultsPrice = adults * pricePerAdult;
+            const totalChildrenWithBedPrice = childrenWithBed * pricePerChildWithBed;
+            const totalChildrenWithoutBedPrice = childrenWithoutBed * pricePerChildWithoutBed;
+
+            // Generate Invoice Details (Room, Vehicle, Days, Itinerary)
+            let invoiceDetails = `
+                        <tr><td>Number of Adults</td><td>${adults}</td></tr>
+                        <tr><td>Number of Children (With Bed)</td><td>${childrenWithBed}</td></tr>
+                        <tr><td>Number of Children (Without Bed)</td><td>${childrenWithoutBed}</td></tr>
+                        <tr><td>Room Type</td><td>${roomType}</td></tr>
+                        <tr><td>Vehicle Type</td><td>${vehicle}</td></tr>
+                        <tr><td>Number of Days</td><td>${days} Days</td></tr>
+                    `;
+
+            // Itinerary based on days
+            if (days == 2) {
+                invoiceDetails += `
+                            <tr><td>Itinerary</td><td>Day 1: Marina Bay Sands, Gardens by the Bay (Ticket: $30)<br>
+                            Day 2: Sentosa Island, Universal Studios (Ticket: $70)<br>
+                            Hotel: 1 Night at Singapore Hotel</td></tr>
+                        `;
+            } else if (days == 3) {
+                invoiceDetails += `
+                            <tr><td>Itinerary</td><td>Day 1: Marina Bay Sands, Gardens by the Bay (Ticket: $30)<br>
+                            Day 2: Sentosa Island, Universal Studios (Ticket: $70)<br>
+                            Day 3: Singapore Zoo, Night Safari (Ticket: $50)<br>
+                            Hotel: 2 Nights at Singapore Hotel</td></tr>
+                        `;
+            } else if (days == 4) {
+                invoiceDetails += `
+                            <tr><td>Itinerary</td><td>Day 1: Marina Bay Sands, Gardens by the Bay (Ticket: $30)<br>
+                            Day 2: Sentosa Island, Universal Studios (Ticket: $70)<br>
+                            Day 3: Singapore Zoo, Night Safari (Ticket: $50)<br>
+                            Day 4: Jurong Bird Park, River Safari (Ticket: $40)<br>
+                            Hotel: 3 Nights at Singapore Hotel</td></tr>
+                        `;
+            }
+
+            document.getElementById('invoiceDetails').innerHTML = invoiceDetails;
+
+            // Generate Pricing Breakdown
+            let pricingDetails = `
+                        <tr><td>Adults</td><td>${adults}</td><td>$${pricePerAdult}</td><td>$${totalAdultsPrice}</td></tr>
+                        <tr><td>Children (With Bed)</td><td>${childrenWithBed}</td><td>$${pricePerChildWithBed}</td><td>$${totalChildrenWithBedPrice}</td></tr>
+                        <tr><td>Children (Without Bed)</td><td>${childrenWithoutBed}</td><td>$${pricePerChildWithoutBed}</td><td>$${totalChildrenWithoutBedPrice}</td></tr>
+                    `;
+
+            document.getElementById('pricingDetails').innerHTML = pricingDetails;
+        });
+    </script>
+</body>
+</html>
