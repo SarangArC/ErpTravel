@@ -1,0 +1,37 @@
+﻿@page
+@model InvoiceModel
+@{
+    ViewData["Title"] = "Invoice";
+}
+
+<h1>Invoice</h1>
+
+<h2>Travel Booking Summary</h2>
+
+<p><strong>Number of Days:</strong> @Model.Days</p>
+<p><strong>Number of Adults:</strong> @Model.Adults</p>
+<p><strong>Children with Bed:</strong> @Model.ChildrenWithBed</p>
+<p><strong>Children without Bed:</strong> @Model.ChildrenWithoutBed</p>
+<p><strong>Number of Rooms:</strong> @Model.Rooms</p>
+<p><strong>Vehicle:</strong> @Model.Vehicle</p>
+
+<h2>Cost Breakdown</h2>
+
+<ul>
+    <li>Adult Cost (@Model.Adults x @Model.AdultCostPerHead per head): @Model.Adults * @Model.AdultCostPerHead = @(Model.Adults * Model.AdultCostPerHead)</li>
+    <li>Children with Bed Cost (@Model.ChildrenWithBed x @Model.ChildWithBedCostPerHead per head): @Model.ChildrenWithBed * @Model.ChildWithBedCostPerHead = @(Model.ChildrenWithBed * Model.ChildWithBedCostPerHead)</li>
+    <li>Children without Bed Cost (@Model.ChildrenWithoutBed x @Model.ChildWithoutBedCostPerHead per head): @Model.ChildrenWithoutBed * @Model.ChildWithoutBedCostPerHead = @(Model.ChildrenWithoutBed * Model.ChildWithoutBedCostPerHead)</li>
+    <li>Room Cost (@Model.Rooms rooms x @Model.RoomCostPerNight per night x @Model.Days nights): @Model.Rooms * @Model.RoomCostPerNight * @Model.Days = @(Model.Rooms * Model.RoomCostPerNight * Model.Days)</li>
+    <li>Vehicle Cost (@Model.Vehicle): @Model.VehicleCost</li>
+</ul>
+
+<h3>Total Cost: @Model.TotalCost</h3>
+
+<h2>Itinerary</h2>
+
+<ul>
+    @foreach (var day in Model.Itinerary)
+    {
+        <li>@day</li>
+    }
+</ul>
